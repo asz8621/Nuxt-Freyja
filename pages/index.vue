@@ -20,10 +20,7 @@ const slideNext = () => {
 	roomSwiper.value.$el.swiper.slideNext();
 };
 
-// 取得環境變數API
-const {
-	public: { API_URL },
-} = useRuntimeConfig();
+const API_URL = useApiUrl();
 
 // 最新消息
 const { data: newsData, error: newsError } = await useFetch('/home/news', {
