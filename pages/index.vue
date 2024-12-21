@@ -133,7 +133,7 @@ if (culinaryError.value) {
 					<div class="col-12 col-md-10 d-flex flex-column gap-10">
 						<div
 							v-for="news in newsData"
-							:key="news.id"
+							:key="news._id"
 							class="card bg-transparent border-0"
 						>
 							<div
@@ -278,7 +278,7 @@ if (culinaryError.value) {
 				<div class="row flex-nowrap overflow-x-auto">
 					<div
 						v-for="culinary in culinaryData"
-						:key="culinary.id"
+						:key="culinary._id"
 						class="col-10 col-md-6 col-xl-4"
 					>
 						<div class="card position-relative border-0 rounded-3">
