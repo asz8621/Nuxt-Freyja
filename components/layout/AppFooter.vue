@@ -26,8 +26,9 @@ import { Icon } from '@iconify/vue';
 							<a
 								class="d-block mt-2 text-neutral-40 fs-8 fs-md-7 fw-normal text-decoration-none"
 								href="tel:+886-7-1234567"
-								>+886-7-1234567</a
 							>
+								+886-7-1234567
+							</a>
 						</p>
 
 						<p class="mb-0 fw-bold text-neutral-0">
@@ -35,8 +36,9 @@ import { Icon } from '@iconify/vue';
 							<a
 								class="d-block mt-2 text-neutral-40 fs-8 fs-md-7 fw-normal text-decoration-none"
 								href="fax:+886-7-1234567"
-								>+886-7-1234567</a
 							>
+								+886-7-1234567
+							</a>
 						</p>
 					</address>
 					<address class="d-flex flex-column mb-0">
@@ -45,8 +47,9 @@ import { Icon } from '@iconify/vue';
 							<a
 								class="d-block mt-2 text-neutral-40 fs-8 fs-md-7 fw-normal text-decoration-none"
 								href="mailto:elh@hexschool.com"
-								>elh@hexschool.com</a
 							>
+								elh@hexschool.com
+							</a>
 						</p>
 
 						<p class="mb-0 fw-bold text-neutral-0">
@@ -55,8 +58,9 @@ import { Icon } from '@iconify/vue';
 								class="d-block mt-2 text-neutral-40 fs-8 fs-md-7 fw-normal text-decoration-none"
 								href="https://www.elhhexschool.com.tw/"
 								target="_blank"
-								>www.elhhexschool.com.tw</a
 							>
+								www.elhhexschool.com.tw
+							</a>
 						</p>
 					</address>
 				</div>
