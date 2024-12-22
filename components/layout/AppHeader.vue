@@ -21,6 +21,15 @@ onMounted(() => {
 onUnmounted(() => {
 	window.removeEventListener('scroll', handleScroll);
 });
+
+const userName = useCookie('userName');
+const token = useCookie('token');
+
+const logout = () => {
+	token.value = null;
+	userName.value = null;
+	navigateTo('/account/login');
+};
 </script>
 
 <template>
@@ -56,15 +65,15 @@ onUnmounted(() => {
 								客房旅宿
 							</NuxtLink>
 						</li>
-						<li class="d-none d-md-block nav-item">
-							<div class="btn-group">
+						<li class="nav-item">
+							<div class="btn-group" v-if="userName && token">
 								<button
 									type="button"
 									class="nav-link d-flex gap-2 p-4 text-neutral-0"
 									data-bs-toggle="dropdown"
 								>
 									<Icon class="fs-5" icon="mdi:account-circle-outline" />
-									Jessica
+									{{ userName }}
 								</button>
 								<ul
 									class="dropdown-menu py-3 overflow-hidden"
@@ -74,21 +83,29 @@ onUnmounted(() => {
 										<a
 											class="dropdown-item px-6 py-4"
 											href="/user/Jessica/profile"
-											>我的帳戶</a
 										>
+											我的帳戶
+										</a>
 									</li>
 									<li>
-										<a class="dropdown-item px-6 py-4" href="/account/login"
-											>登出</a
+										<a
+											class="dropdown-item px-6 py-4"
+											href="#"
+											@click.prevent="logout"
 										>
+											登出
+										</a>
 									</li>
 								</ul>
 							</div>
-						</li>
-						<li class="d-md-none nav-item">
-							<NuxtLink to="/account/login" class="nav-link p-4 text-neutral-0">
-								會員登入
-							</NuxtLink>
+							<div v-else>
+								<NuxtLink
+									to="/account/login"
+									class="nav-link p-4 text-neutral-0"
+								>
+									會員登入
+								</NuxtLink>
+							</div>
 						</li>
 						<li class="nav-item">
 							<NuxtLink
