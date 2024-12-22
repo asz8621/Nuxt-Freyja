@@ -2,6 +2,8 @@
 import { Icon } from '@iconify/vue';
 
 const route = useRoute();
+const userStore = useUserStore();
+const { initUser } = userStore;
 const transparentBgRoute = ['home', 'rooms'];
 
 const isTransparentRoute = computed(() =>
@@ -22,12 +24,15 @@ onUnmounted(() => {
 	window.removeEventListener('scroll', handleScroll);
 });
 
-const userName = useCookie('userName');
+const userData = useCookie('userData');
 const token = useCookie('token');
+
+const userName = computed(() => userData.value?.name);
 
 const logout = () => {
 	token.value = null;
-	userName.value = null;
+	userData.value = null;
+	initUser();
 	navigateTo('/account/login');
 };
 </script>
