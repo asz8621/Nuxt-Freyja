@@ -8,4 +8,5 @@ export default defineNuxtConfig({
       API_URL: "",
     }
   },
+  modules: ["@pinia/nuxt"],
 })
