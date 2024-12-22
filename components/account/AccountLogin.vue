@@ -1,4 +1,85 @@
-<script setup></script>
+<script setup>
+const API_URL = useApiUrl();
+const { $swal } = useNuxtApp();
+
+const userData = ref({
+	email: '',
+	password: '',
+});
+
+watch(userData.value, (n) => {
+	if (isRemember.value) {
+		localStorage.setItem('userEmail', n.email);
+	} else {
+		localStorage.removeItem('userEmail');
+	}
+});
+
+// 記住帳號
+const isRemember = ref(false);
+if (typeof localStorage !== 'undefined') {
+	isRemember.value = localStorage.getItem('isRemember') === 'true';
+}
+
+watch(isRemember, (n) => {
+	if (n) {
+		localStorage.setItem('isRemember', 'true');
+	} else {
+		localStorage.removeItem('isRemember');
+		localStorage.removeItem('userEmail');
+	}
+});
+
+if (typeof localStorage !== 'undefined' && isRemember.value) {
+	const savedEmail = localStorage.getItem('userEmail');
+	if (savedEmail) userData.value.email = savedEmail;
+}
+
+// 登入
+const login = async () => {
+	try {
+		const { result, token } = await $fetch('/user/login', {
+			baseURL: API_URL,
+			method: 'POST',
+			body: {
+				...userData.value,
+			},
+		});
+
+		const tokenCookie = useCookie('token', {
+			path: '/',
+			maxAge: 60 * 60 * 48,
+		});
+		tokenCookie.value = token;
+
+		const userNameCookie = useCookie('userName', {
+			path: '/',
+			maxAge: 60 * 60 * 48,
+		});
+		userNameCookie.value = result.name;
+
+		$swal.fire({
+			position: 'center',
+			icon: 'success',
+			title: '登入成功',
+			showConfirmButton: false,
+			timer: 1250,
+		});
+
+		navigateTo('/');
+	} catch (error) {
+		const { message } = error.response?._data;
+		$swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: '登入失敗',
+			text: message,
+			showConfirmButton: true,
+			confirmButtonText: '確認',
+		});
+	}
+};
+</script>
 
 <template>
 	<div class="px-5 px-md-0">
@@ -17,9 +98,9 @@
 				<input
 					id="email"
 					class="form-control p-4 text-neutral-100 fw-medium border-neutral-40"
-					value="jessica@sample.com"
 					placeholder="請輸入信箱"
 					type="email"
+					v-model="userData.email"
 				/>
 			</div>
 			<div class="mb-4 fs-8 fs-md-7">
@@ -27,9 +108,9 @@
 				<input
 					id="password"
 					class="form-control p-4 text-neutral-100 fw-medium border-neutral-40"
-					value="jessica@sample.com"
 					placeholder="請輸入密碼"
 					type="password"
+					v-model="userData.password"
 				/>
 			</div>
 			<div
@@ -41,21 +122,23 @@
 						class="form-check-input"
 						type="checkbox"
 						value=""
+						v-model="isRemember"
 					/>
 					<label class="form-check-label fw-bold" for="remember">
 						記住帳號
 					</label>
 				</div>
-				<button
+				<!-- <button
 					class="text-primary-100 fw-bold text-decoration-underline bg-transparent border-0"
 					type="button"
 				>
 					忘記密碼？
-				</button>
+				</button> -->
 			</div>
 			<button
 				class="btn btn-primary-100 w-100 py-4 text-neutral-0 fw-bold"
 				type="button"
+				@click="login"
 			>
 				會員登入
 			</button>
@@ -111,3 +194,4 @@ input::placeholder {
 	border-color: #bf9d7d;
 }
 </style>
+
