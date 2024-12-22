@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   css: ['@/assets/styles/all.scss'],
   runtimeConfig: {
     public: {
-      API_URL: "",
+      API_URL: "https://freyja-ob3p.onrender.com/api/v1",
     }
   },
   modules: ["@pinia/nuxt"],
