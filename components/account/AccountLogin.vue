@@ -1,7 +1,8 @@
 <script setup>
 const API_URL = useApiUrl();
 const { $swal } = useNuxtApp();
-
+const userStore = useUserStore();
+const { setUserdata, setToken } = userStore;
 const userData = ref({
 	email: '',
 	password: '',
@@ -51,12 +52,15 @@ const login = async () => {
 			maxAge: 60 * 60 * 48,
 		});
 		tokenCookie.value = token;
+		setToken(tokenCookie.value);
 
-		const userNameCookie = useCookie('userName', {
+		const userDataCookie = useCookie('userData', {
 			path: '/',
 			maxAge: 60 * 60 * 48,
 		});
-		userNameCookie.value = result.name;
+		const { address, birthday, email, id, name, phone } = result;
+		userDataCookie.value = { address, birthday, email, id, name, phone };
+		setUserdata(userDataCookie.value);
 
 		$swal.fire({
 			position: 'center',
