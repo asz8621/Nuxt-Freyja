@@ -87,22 +87,6 @@ const totalPrice = computed(() => {
 	return accommodationCost.value - 1000;
 });
 
-// 格式化日期
-const formatDate = (dateStr) => {
-	const options = {
-		weekday: 'long',
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	};
-	const date = new Date(dateStr);
-
-	// 替換英文星期名稱為中文
-	const formattedDate = date.toLocaleDateString('zh-Hant-TW', options);
-
-	return formattedDate;
-};
-
 const orderUserData = ref({
 	name: '',
 	phone: '',
@@ -198,10 +182,10 @@ watch(selectedDistrict, (district) => {
 									<div>
 										<h3 class="title-deco mb-2 fs-7 fw-bold">訂房日期</h3>
 										<p class="mb-2 fw-medium">
-											入住：{{ formatDate(bookingData.start) }}
+											入住：{{ $formatDate(bookingData.start) }}
 										</p>
 										<p class="mb-0 fw-medium">
-											退房：{{ formatDate(bookingData.end) }}
+											退房：{{ $formatDate(bookingData.end) }}
 										</p>
 									</div>
 									<button
