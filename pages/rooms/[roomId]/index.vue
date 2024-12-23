@@ -5,6 +5,11 @@ import { Icon } from '@iconify/vue';
 const route = useRoute();
 const { roomId } = route.params;
 
+const bookingStore = useBookingStore();
+const { setBooking, setRoomData } = bookingStore;
+
+const token = useCookie('token');
+
 const datePickerModal = ref(null);
 
 const openModal = () => {
@@ -18,16 +23,17 @@ const { data: room, error } = await useFetch(`/rooms/${roomId}`, {
 	baseURL: API_URL,
 	transform: (response) => {
 		const { result } = response;
-		console.log('result', result);
+		// console.log('result', result);
 		return result;
 	},
 });
-
 // 如果有錯誤或沒有資料，則跳轉到房型頁面
 if (error.value) {
 	console.error('無法載入房型，請稍後再試。');
 	navigateTo('/rooms');
 }
+
+setRoomData(room);
 
 const MAX_BOOKING_PEOPLE = room.value.maxPeople;
 
@@ -61,6 +67,46 @@ const handleDateChange = (bookingInfo) => {
 
 	bookingPeople.value = bookingInfo?.people || 1;
 	daysCount.value = bookingInfo.daysCount;
+};
+
+const bookNow = async () => {
+	// 如果沒有選擇日期，則開啟日期選擇器
+	if (bookingDate.date.end === null || bookingDate.date.start === null) {
+		openModal();
+		return;
+	}
+
+	// 如果沒有登入，則跳轉到登入頁面
+	try {
+		await $fetch('/user/check', {
+			baseURL: API_URL,
+			method: 'GET',
+			headers: {
+				Authorization: token.value,
+			},
+		});
+	} catch (error) {
+		token.value = null;
+		return navigateTo('/account/login');
+	}
+
+	setBooking({
+		roomId,
+		start: bookingDate.date.start,
+		end: bookingDate.date.end,
+		people: bookingPeople.value,
+	});
+
+	// 跳轉到訂房頁面
+	navigateTo({
+		name: 'rooms-roomId-booking',
+		params: { roomId },
+		query: {
+			start: bookingDate.date.start,
+			end: bookingDate.date.end,
+			people: bookingPeople.value,
+		},
+	});
 };
 </script>
 
@@ -409,15 +455,13 @@ const handleDateChange = (bookingInfo) => {
 								<h5 class="mb-0 text-primary-100 fw-bold">
 									NT$ {{ $formatNumber(room.price) }}
 								</h5>
-								<NuxtLink
-									:to="{
-										name: 'rooms-roomId-booking',
-										params: { roomId },
-									}"
+								<button
+									type="button"
 									class="btn btn-primary-100 py-4 text-neutral-0 fw-bold rounded-3"
+									@click="bookNow"
 								>
 									立即預訂
-								</NuxtLink>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -449,15 +493,13 @@ const handleDateChange = (bookingInfo) => {
 								{{ daysFormatOnMobile(bookingDate.date?.end) }}</span
 							>
 						</div>
-						<NuxtLink
-							:to="{
-								name: 'rooms-roomId-booking',
-								params: { roomId },
-							}"
+						<button
+							type="button"
 							class="btn btn-primary-100 px-12 py-4 text-neutral-0 fw-bold rounded-3"
+							@click="bookNow"
 						>
 							立即預訂
-						</NuxtLink>
+						</button>
 					</template>
 				</div>
 			</section>
