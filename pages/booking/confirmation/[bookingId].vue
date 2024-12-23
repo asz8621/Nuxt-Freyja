@@ -60,7 +60,6 @@ const goToOrder = () => {
 					</div>
 					<p class="text-neutral-40 fw-medium">
 						我們已發送訂房資訊及詳細內容至你的電子信箱，入住時需向櫃檯人員出示訂房人證件。
-						<span>{{ data }}</span>
 					</p>
 					<hr class="my-10 my-md-20 opacity-100 text-neutral-40" />
 
