@@ -1,6 +1,8 @@
 <script setup>
 const route = useRoute();
 const { userId } = route.params;
+const userStore = useUserStore();
+const { userData } = storeToRefs(userStore);
 </script>
 
 <template>
@@ -20,7 +22,7 @@ const { userId } = route.params;
 					class="hero-content d-flex flex-column flex-md-row justify-content-center justify-content-md-start align-items-md-center gap-4 gap-md-6 mx-5 my-10 mx-md-0 my-md-0"
 				>
 					<img class="avatar" src="/images/avatar-6.png" alt="avatar" />
-					<h1 class="text-neutral-0 fw-bold">Hello，Jessica</h1>
+					<h1 class="text-neutral-0 fw-bold">Hello，{{ userData.name }}</h1>
 				</div>
 			</div>
 		</section>
