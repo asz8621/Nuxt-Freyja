@@ -6,6 +6,9 @@ const pathSegments = path.split('/').filter(Boolean);
 if (pathSegments[0] === 'user' && pathSegments.length === 2) {
 	navigateTo(`/user/${userId}/profile`);
 }
+definePageMeta({
+	middleware: ['auth'],
+});
 </script>
 
 <template>
@@ -15,3 +18,4 @@ if (pathSegments[0] === 'user' && pathSegments.length === 2) {
 </template>
 
 <style scoped></style>
+
