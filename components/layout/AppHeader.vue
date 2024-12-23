@@ -85,12 +85,12 @@ const logout = () => {
 									style="right: 0; left: auto; border-radius: 20px"
 								>
 									<li>
-										<a
+										<NuxtLink
 											class="dropdown-item px-6 py-4"
-											href="/user/Jessica/profile"
+											:to="`/user/${userData.id}/profile`"
 										>
 											我的帳戶
-										</a>
+										</NuxtLink>
 									</li>
 									<li>
 										<a
