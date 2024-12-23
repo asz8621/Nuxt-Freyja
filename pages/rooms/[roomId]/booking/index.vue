@@ -28,7 +28,7 @@ const confirmBooking = async () => {
 		roomId: bookingData.value.roomId,
 		checkInDate: bookingData.value.start,
 		checkOutDate: bookingData.value.end,
-		peopleNum: stayDuration.value,
+		peopleNum: bookingData.value.people,
 		userInfo: { ...orderUserData.value },
 	};
 
@@ -55,6 +55,7 @@ const confirmBooking = async () => {
 			showConfirmButton: false,
 			timer: 1500,
 		});
+
 		router.push({
 			name: 'booking-confirmation-bookingId',
 			params: {
