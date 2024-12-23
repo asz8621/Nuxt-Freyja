@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+definePageMeta({
+	middleware: ['auth'],
+});
+</script>
 
 <template>
 	<div>
@@ -7,3 +11,4 @@
 </template>
 
 <style lang="scss" scoped></style>
+
