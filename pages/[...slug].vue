@@ -5,6 +5,18 @@ const event = useRequestEvent(); // 獲取當前請求的事件
 
 // 設定404狀態碼
 useRequestEvent(event, 404);
+
+const title = '404 - 找不到此頁面｜高雄享樂酒店';
+const description = '404 - 找不到此頁面';
+
+useSeoMeta({
+	title: () => title,
+	description: () => description,
+	ogTitle: () => title,
+	ogDescription: () => description,
+	twitterTitle: () => title,
+	twitterDescription: () => description,
+});
 </script>
 
 <template>

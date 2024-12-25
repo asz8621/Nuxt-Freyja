@@ -9,6 +9,18 @@ if (pathSegments[0] === 'user' && pathSegments.length === 2) {
 definePageMeta({
 	middleware: ['auth'],
 });
+
+const title = '會員中心｜高雄享樂酒店';
+const description = '高雄享樂酒店會員中心';
+
+useSeoMeta({
+	title: () => title,
+	description: () => description,
+	ogTitle: () => title,
+	ogDescription: () => description,
+	twitterTitle: () => title,
+	twitterDescription: () => description,
+});
 </script>
 
 <template>

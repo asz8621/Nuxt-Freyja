@@ -140,6 +140,18 @@ watch(selectedDistrict, (district) => {
 	);
 	selectedCode.value = districtData ? districtData.zip : '';
 });
+
+const title = '預定房間｜高雄享樂酒店';
+const description =
+	'預定您的高雄享樂酒店客房，享受專屬優惠與優質服務，為您的旅程帶來更多便利與舒適。';
+useSeoMeta({
+	title: () => title,
+	description: () => description,
+	ogTitle: () => title,
+	ogDescription: () => description,
+	twitterTitle: () => title,
+	twitterDescription: () => description,
+});
 </script>
 
 <template>

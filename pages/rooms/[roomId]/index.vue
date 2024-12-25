@@ -87,7 +87,7 @@ const bookNow = async () => {
 		});
 	} catch (error) {
 		token.value = null;
-		return navigateTo('/account/login');
+		navigateTo('/account/login');
 	}
 
 	setBooking({
@@ -108,6 +108,21 @@ const bookNow = async () => {
 		},
 	});
 };
+
+const title = `${room.value.name}｜高雄享樂酒店`;
+const description = room.value.description;
+
+useSeoMeta({
+	title: () => title,
+	description: () => description,
+	ogTitle: () => title,
+	ogDescription: () => description,
+	ogImage: () => `${room.value.imageUrl}`,
+	twitterCard: 'summary_large_image',
+	twitterTitle: () => title,
+	twitterDescription: () => description,
+	twitterImage: () => `${room.value.imageUrl}`,
+});
 </script>
 
 <template>

@@ -58,6 +58,18 @@ const { data: culinaryData, error: culinaryError } = await useFetch(
 if (culinaryError.value) {
 	console.error('無法載入佳餚美饌，請稍後再試。');
 }
+
+const title = '高雄享樂酒店｜Kaohsiung Enjoyment Luxury Hotel';
+const description =
+	'位於高雄市中心，提供無與倫比的奢華住宿體驗。盡情欣賞壯麗的市景，並享受頂級設施，讓每一刻都彷彿置身於極致的舒適與優雅之中。立即預訂，開啟一段難忘的尊貴之旅！';
+useSeoMeta({
+	title: () => title,
+	description: () => description,
+	ogTitle: () => title,
+	ogDescription: () => description,
+	twitterTitle: () => title,
+	twitterDescription: () => description,
+});
 </script>
 
 <template>

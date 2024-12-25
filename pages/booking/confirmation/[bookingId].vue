@@ -39,6 +39,19 @@ const priceTotal = computed(() => roomId.price * stayDuration);
 const goToOrder = () => {
 	router.push(`/user/${orderUserId.value}/order`);
 };
+
+const title = '預定完成｜高雄享樂酒店';
+const description =
+	'讓高雄享樂酒店的舒適房型陪伴您的旅行，無論是家庭度假還是商務會議，我們都為您提供最貼心的服務與設施。';
+
+useSeoMeta({
+	title: () => title,
+	description: () => description,
+	ogTitle: () => title,
+	ogDescription: () => description,
+	twitterTitle: () => title,
+	twitterDescription: () => description,
+});
 </script>
 
 <template>
