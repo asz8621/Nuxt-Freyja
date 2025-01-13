@@ -80,16 +80,12 @@ const updateUserData = async () => {
 		county: selectedDistrict.value,
 		city: selectedCity.value,
 	};
-	const newData = {
-		...userAllData.value,
+	const APIData = {
+		userId: tempUserData.value._id,
+		...tempUserData.value,
 		address,
 		birthday: `${birthdayYear.value}/${birthdayMonth.value}/${birthdayDay.value}`,
 	};
-	const APIData = {
-		userId: userAllData.value._id,
-		...newData,
-	};
-
 	await putUserData(APIData, 'userData');
 };
 
@@ -114,9 +110,9 @@ const putUserData = async (data, fn = 'password') => {
 			timer: 1500,
 		});
 		if (fn === 'userData') {
-			refresh();
+			await refresh();
+			editUserData();
 		}
-		window.location.reload();
 	} catch (error) {
 		const message = error.response?._data?.message;
 		$swal.fire({
