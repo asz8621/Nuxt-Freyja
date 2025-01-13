@@ -7,6 +7,7 @@ import { useScreens } from 'vue-screen-utils';
 
 import Modal from 'bootstrap/js/dist/modal';
 import { Icon } from '@iconify/vue';
+const { $swal } = useNuxtApp();
 
 const modal = ref(null);
 
@@ -89,6 +90,19 @@ const confirmDateOnMobile = () => {
 };
 
 const confirmDate = () => {
+	if (tempDate.date.start === null || tempDate.date.end === null) {
+		$swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: '日期錯誤',
+			text: '請選擇正確的入住與退房日期',
+			showConfirmButton: true,
+			confirmButtonText: '確認',
+		});
+
+		return;
+	}
+
 	const isMobile = mapCurrent({ md: false }, true);
 
 	if (isMobile.value) {
