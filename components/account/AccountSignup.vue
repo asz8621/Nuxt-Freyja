@@ -26,7 +26,7 @@ const validateEmail = (email) => {
 };
 
 // 第一步確認信箱與密碼
-const checkAccount = () => {
+const checkAccount = async () => {
 	isEmailAndPasswordValid.value = false;
 	if (!validateEmail(registerData.value.email)) {
 		errorMsg.value = '信箱規格不符合';
@@ -46,9 +46,38 @@ const checkAccount = () => {
 		errorMsg.value = '密碼長度必須大於 8 碼且包含至少一個英文字母和數字';
 		return;
 	}
-	registerData.value.password = registerPassword.value;
-	isEmailAndPasswordValid.value = true;
-	errorMsg.value = '';
+
+	try {
+		const checkData = await $fetch('/verify/email', {
+			baseURL: API_URL,
+			method: 'POST',
+			body: { ...registerData.value },
+		});
+		if (checkData.result.isEmailExists) {
+			$swal.fire({
+				position: 'center',
+				icon: 'error',
+				title: '註冊失敗',
+				text: '信箱已註冊，請前往登入頁面進行登入。',
+				showConfirmButton: true,
+				confirmButtonText: '確認',
+			});
+		} else {
+			registerData.value.password = registerPassword.value;
+			isEmailAndPasswordValid.value = true;
+			errorMsg.value = '';
+		}
+	} catch (error) {
+		const { message } = error.response?._data;
+		$swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: '註冊失敗',
+			text: message,
+			showConfirmButton: true,
+			confirmButtonText: '確認',
+		});
+	}
 };
 
 // 生日
