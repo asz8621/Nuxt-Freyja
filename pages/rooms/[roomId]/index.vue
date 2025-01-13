@@ -85,28 +85,28 @@ const bookNow = async () => {
 				Authorization: token.value,
 			},
 		});
+
+		setBooking({
+			roomId,
+			start: bookingDate.date.start,
+			end: bookingDate.date.end,
+			people: bookingPeople.value,
+		});
+
+		// 跳轉到訂房頁面
+		navigateTo({
+			name: 'rooms-roomId-booking',
+			params: { roomId },
+			query: {
+				start: bookingDate.date.start,
+				end: bookingDate.date.end,
+				people: bookingPeople.value,
+			},
+		});
 	} catch (error) {
 		token.value = null;
 		navigateTo('/account/login');
 	}
-
-	setBooking({
-		roomId,
-		start: bookingDate.date.start,
-		end: bookingDate.date.end,
-		people: bookingPeople.value,
-	});
-
-	// 跳轉到訂房頁面
-	navigateTo({
-		name: 'rooms-roomId-booking',
-		params: { roomId },
-		query: {
-			start: bookingDate.date.start,
-			end: bookingDate.date.end,
-			people: bookingPeople.value,
-		},
-	});
 };
 
 const title = `${room.value.name}｜高雄享樂酒店`;
