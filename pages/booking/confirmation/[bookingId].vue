@@ -37,7 +37,7 @@ const stayDuration = timeDifference / (1000 * 3600 * 24);
 const priceTotal = computed(() => roomId.price * stayDuration);
 
 const goToOrder = () => {
-	router.push(`/user/${orderUserId.value}/order`);
+	router.push(`/user/${orderUserId}/order`);
 };
 
 const title = '預定完成｜高雄享樂酒店';
